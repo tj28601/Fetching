@@ -1,0 +1,55 @@
+import React, { Component } from 'react';
+import TextInputField from './TextInputField';
+
+class BookFormContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      bookAuthor: '',
+      bookTitle: ''
+    }
+        this.handleBookAuthorChange = this.handleBookAuthorChange.bind(this);
+        this.handleBookTitleChange = this.handleBookTitleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleBookAuthorChange(event) {
+    let value = event.target.value
+    this.setState({ bookAuthor: value })
+  }
+  handleBookTitleChange(event) {
+    let value = event.target.value
+    this.setState({ bookTitle: value })
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+    let formPayload = {
+      book: {
+      title: this.state.bookTitle,
+      author: this.state.bookAuthor,
+  }}
+    this.props.addNewBook(formPayload);
+
+  }
+  render(){
+    return(
+    <form onSubmit={this.handleSubmit}>
+      <TextInputField
+        label='Book Title'
+        value={this.state.BookTitle}
+        name='bookTitle'
+        handleChange={this.handleBookTitleChange}
+      />
+      <TextInputField
+        label='Book Author'
+        value={this.state.BookAuthor}
+        name='bookAuthor'
+        handleChange={this.handleBookAuthorChange}
+      />
+      <input type='submit' value='Submit' />
+    </form>
+    )
+  }
+}
+
+export default BookFormContainer;
