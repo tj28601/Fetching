@@ -49,7 +49,7 @@ class BookShowContainer extends Component {
 
     return(
       <div>
-      <h1>Updated List</h1>
+      <h1>Blah ..</h1>
 
       <BooksIndex
         books={this.state.books}
