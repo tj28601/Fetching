@@ -15,3 +15,10 @@
  *= require foundation_and_overrides
 
  */
+ .top-bar {
+   height: 200px;
+   background: image-url('logo.jpg') no-repeat;
+   background-size: 350px 350px;
+   background-position: center;
+   background-color: black;
+ }
