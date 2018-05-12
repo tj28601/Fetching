@@ -23,6 +23,30 @@ def index
     #   book = Book.find(book_params[:id])
       end
     end
+
+    def destroy
+#       all_books = Book.all
+# @book = Book.find(params[:id])
+# @book.destroy
+# render json: all_books
+
+# destroyed_book= Book.find[:book][:book_id]
+# if destroyed_book.destroy
+#   render json: {message:"Photo Deleted"}
+# else
+#   render json: { errors: destroyed_book.errors.full_messages }, status: :unprocessable_entity
+# end
+book = Book.find(params['id'])
+book.delete
+end
+
+  #   else
+  #     render json: { errors: destroyed_book.errors.full_messages }, status: :unprocessable_entity
+  #   end
+  # else
+  #   render json: { errors: "Access Denied, Punk"}, status: 401
+
+  # end
     # if user_signed_in?
     #   update_book = Book.where(book: book)
     #   if !update_photo.empty?

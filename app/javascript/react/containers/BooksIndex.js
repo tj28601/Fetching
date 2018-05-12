@@ -4,14 +4,17 @@ import BookTile from './BookTile'
 const BooksIndex = props => {
 
   let booksArray = props.books.map(book => {
-    // console.log(props)
+        let id = book.id
+        let author = book.author
+        let title = book.title
+          let handleDelete = () => props.deleteBook(id)
     return(
       <BookTile
-        key={book.id}
-        id={book.id}
-        title={book.title}
-        author={book.author}
-
+        key={id}
+        id={id}
+        title={title}
+        author={author}
+        deleteBookClick={handleDelete}
       />
     )
   })
