@@ -11,6 +11,7 @@ class BookFormContainer extends Component {
         this.handleBookAuthorChange = this.handleBookAuthorChange.bind(this);
         this.handleBookTitleChange = this.handleBookTitleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleBookAuthorChange(event) {
@@ -31,6 +32,15 @@ class BookFormContainer extends Component {
     this.props.addNewBook(formPayload);
 
   }
+  handleDelete(event){
+  let formPayload = {
+  book: {
+    title: this.state.bookTitle,
+    author: this.state.bookAuthor,
+} }
+this.props.deleteReview(formPayload)
+this.setState({bookTitle:"", bookAuthor:""})
+}
   render(){
     return(
     <form onSubmit={this.handleSubmit}>
