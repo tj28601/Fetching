@@ -4,7 +4,7 @@ import BookTile from './BookTile'
 const BooksIndex = props => {
 
   let booksArray = props.books.map(book => {
-    console.log(props)
+    // console.log(props)
     return(
       <BookTile
         key={book.id}

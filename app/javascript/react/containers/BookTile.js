@@ -2,10 +2,10 @@ import React from 'react';
 
 // Router, browserHistory, Route, IndexRoute,
 const BookTile = props => {
-  console.log(props)
+
   return (
     <div>
-    <li>{`${props.title} by ${props.author}`}</li>
+    <li>{`${props.title} by ${props.author}`}<button id="deleteReviewButton" onClick={props.passDownDelete}>Delete Review</button></li>
     </div>
 
   )
