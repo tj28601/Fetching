@@ -1,5 +1,6 @@
-class Book < ApplicationRecord
+class Favorite < ApplicationRecord
   validates_uniqueness_of :title, presence: true
   validates :author, presence: true
 
+    
 end

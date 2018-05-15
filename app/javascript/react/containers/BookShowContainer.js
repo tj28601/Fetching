@@ -9,25 +9,18 @@ class BookShowContainer extends Component {
 
     super(props);
     this.state = {
-      books: [],
+      favorites: [],
       bookAuthor: '',
-      bookTitle: ''
+      bookTitle: '',
+      books:[]
     };
-    // this.addNewBook = this.addNewBook.bind(this);
+    this.addNewBook = this.addNewBook.bind(this);
     this.deleteBook = this.deleteBook.bind(this);
+    this.addToFavorites = this.addToFavorites.bind(this);
+    this.deleteFromFavorites = this.deleteFromFavorites.bind(this);
   }
-  // addNewBook(formPayload) {
-  //   fetch('/api/v1/books', {
-  //     credentials: 'same-origin',
-  //     method: 'post',
-  //     body: JSON.stringify(formPayload),
-  //     headers: { 'Content-Type': 'application/json' }
-  //       }).then(response => response.json())
-  //       .then(body => {
-  //         let newBookArray = this.state.books.concat(body)
-  //         this.setState({ books: newBookArray })
-  //       })
-  // }
+
+
   componentDidMount(){
       fetch('/api/v1/books')
         .then(response => {
@@ -45,116 +38,66 @@ class BookShowContainer extends Component {
             this.setState({ books: allBooks });
         })
         .catch(error => console.error(`Error in fetch: ${error.message}`));
-
-
     }
 
-      // addNewBook(formPayload) {
-      //   fetch('/api/v1/books', {
-      //     credentials: 'same-origin',
-      //     method: 'post',
-      //     body: JSON.stringify(formPayload),
-      //     headers: { 'Content-Type': 'application/json' }
-      //       }).then(response => response.json())
-      //       .then(body => {
-      //         let newBookArray = this.state.books.concat(body)
-      //         this.setState({ books: newBookArray })
-      //       })
-      // }
-
-      // deleteBook(formPayload){
-      //     fetch('/api/v1/books', {
-      //     credentials: 'same-origin',
-      //     method: 'delete',
-      //     body: JSON.stringify(formPayload),
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     }
-      //   })
-      //   .then(response => {
-      //     if (response.ok) {
-      //       return response;
-      //     } else {
-      //       let errorMessage = `${response.status}(${response.statusText})`,
-      //         error = new Error(errorMessage);
-      //       throw(error);
-      //     }
-      //   })
-      //   .then(response => response.json())
-      //   .then(body => {
-      //     let arrayAfterDelete = this.state.books.slice(body)
-      //   this.setState({ books: arrayAfterDelete });
-      //   })
-      //   .catch(error => console.error(`Error in fetch: ${error.message}`));
-      // }
-
-      // deleteBook(id) {
-      //   let newBooks = this.state.books.filter(book => {
-      //     return book.id !== id
-      //   })
-      //   this.setState({ books: newBooks })
-      // }
-
       deleteBook(current_book){
-
-        fetch('/api/v1/books', {
-          credentials: 'same-origin',
+        fetch('/api/v1/books/' + current_book, {
           method: 'DELETE',
+          credentials: 'same-origin',
           headers: {
           'Content-Type': 'application/json',
           'X-Requested-With': 'XMLHttpRequest'
          }
-         }).then((response) => {
+
+        }).then((response) => response.json())
          const newBooks = this.state.books.filter(book => book.id !== current_book)
            this.setState({books: newBooks})
-         })
 
-
-
-            // }).then(response => response.json())
-
-          // }).then(console.log(response))
-          //
-          //
-            // .then(json => {
-            //   debugger;
-            // })
-            // .then(body => {
-            //   let newBooks = this.state.books.filter(body => {
-            //     return body.id !== id
-            //   })
-            //   this.setState({ books: newBooks })
-            //
-            // })
       }
 
-//       deleteReview(formPayload) {
-//   fetch(`/api/v1/reviews/${formPayload.review.review_id}`, {
-//     credentials: 'same-origin',
-//     method: 'delete',
-//     body: JSON.stringify(formPayload),
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'X-Requested-With': 'XMLHttpRequest',
-//       'X-CSRF-Token': $('meta[name=csrf-token]').attr('content')
-//     }
-//   })
-//   .then(response => {
-//     if (response.ok) {
-//       return response;
-//     } else {
-//       let errorMessage = `${response.status} (${response.statusText})`,
-//       error = new Error(errorMessage);
-//       throw(error);
-//     }
-//   })
-//   .then( this.getReviews())
-//   .catch(error => console.error(`Error in fetch: ${error.message}`));
-// }
+addToFavorites(book){
+  fetch('/api/v1/favorites', {
+    credentials: 'same-origin',
+    method: 'post',
+    body: JSON.stringify(book),
+    headers: { 'Content-Type': 'application/json' }
+      }).then(response => response.json())
+      .then(body => {
+        let favoritesArray = this.state.favorites.concat(body)
+        this.setState({ favorites: favoritesArray })
+        })
+  }
+  deleteFromFavorites(current_favorite){
+      fetch('/api/v1/favorites/' + current_favorite, {
+        method: 'DELETE',
+        credentials: 'same-origin',
+        // body: JSON.stringify(book),
+        headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+       }
 
+      }).then((response) => response.json())
+      const newFavs = this.state.favorites.filter(favorite => favorite.id !== current_favorite)
+        this.setState({favorites: newFavs})
+
+   }
+
+  addNewBook(formPayload){
+    fetch('/api/v1/books', {
+      credentials: 'same-origin',
+      method: 'post',
+      body: JSON.stringify(formPayload),
+      headers: { 'Content-Type': 'application/json' }
+        }).then(response => response.json())
+        .then(body => {
+          let newBookArray = this.state.books.concat(body)
+          this.setState({ books: newBookArray })
+        })
+  }
 
   render(){
-    let handleAddNewBook = (formPayload) => this.addNewBook(formPayload)
+    // let handleAddNewBook = (formPayload) => this.addNewBook(formPayload)
 
     return(
       <div>
@@ -163,10 +106,12 @@ class BookShowContainer extends Component {
       <BooksIndex
         books={this.state.books}
         deleteBook={this.deleteBook}
+        addToFavorites={this.addToFavorites}
+        deleteFavorite={this.deleteFromFavorites}
       />
 
       <BookFormContainer
-        addNewBook={handleAddNewBook}
+        addNewBook={this.addNewBook}
       />
     </div>
     )
