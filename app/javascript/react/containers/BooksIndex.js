@@ -7,7 +7,9 @@ const BooksIndex = props => {
         let id = book.id
         let author = book.author
         let title = book.title
-          let handleDelete = () => props.deleteBook(id)
+        let handleDelete = () => props.deleteBook(id)
+        let handleAddNewFav = () => props.addToFavorites(book)
+        let handleDeleteFav = () => props.deleteFavorite(book)
     return(
       <BookTile
         key={id}
@@ -15,6 +17,8 @@ const BooksIndex = props => {
         title={title}
         author={author}
         deleteBookClick={handleDelete}
+        addBooktoFavorites={handleAddNewFav}
+        deleteBookfromFavs={handleDeleteFav}
       />
     )
   })

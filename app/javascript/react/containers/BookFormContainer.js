@@ -29,8 +29,9 @@ class BookFormContainer extends Component {
       title: this.state.bookTitle,
       author: this.state.bookAuthor,
   }}
+  // debugger;
     this.props.addNewBook(formPayload);
-
+    // debugger;
   }
   handleDelete(event){
   let formPayload = {
