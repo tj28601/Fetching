@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import BookTile from './BookTile';
 import BooksIndex from './BooksIndex';
 import BookFormContainer from './BookFormContainer';
+import SideBarComponent from './SideBarComponent';
+import { slide as Menu } from 'react-burger-menu';
 
 class BookShowContainer extends Component {
   constructor(props) {
@@ -38,7 +40,26 @@ class BookShowContainer extends Component {
             this.setState({ books: allBooks });
         })
         .catch(error => console.error(`Error in fetch: ${error.message}`));
-    }
+
+}
+  componentDidMount(){
+fetch('/api/v1/favorites')
+  .then(response => {
+    if (response.ok) {
+      return response;
+    } else {
+        let errorMessage = `${response.status}(${response.statusText})`,
+          error = new Error(errorMessage);
+          throw(error);
+      }
+  })
+  .then(response => response.json())
+  .then(body => {
+    let allFavorites = body.favorites
+      this.setState({ favorites: allFavorites });
+  })
+  .catch(error => console.error(`Error in fetch: ${error.message}`));
+}
 
       deleteBook(current_book){
         fetch('/api/v1/books/' + current_book, {
@@ -95,13 +116,26 @@ addToFavorites(book){
           this.setState({ books: newBookArray })
         })
   }
+    // <SideBarComponent
+    //   favorites={this.state.favoeites}
+    //   <Menu isOpen />
+    //   <Menu isOpen={ true } />
+    // />
 
   render(){
-    // let handleAddNewBook = (formPayload) => this.addNewBook(formPayload)
 
+    let sideBar = (
+      <SideBarComponent
+        favorites={this.state.favorites}
+        deleteFromFavorites={this.deleteFromFavorites}
+      />
+    )
     return(
-      <div>
-      <h1>Blah ..</h1>
+    <div>
+    <div>
+          {sideBar}
+          </div>
+
 
       <BooksIndex
         books={this.state.books}
