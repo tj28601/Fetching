@@ -12,6 +12,7 @@ class BookFormContainer extends Component {
         this.handleBookTitleChange = this.handleBookTitleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleClearForm = this.handleClearForm.bind(this);
   }
 
   handleBookAuthorChange(event) {
@@ -22,6 +23,13 @@ class BookFormContainer extends Component {
     let value = event.target.value
     this.setState({ bookTitle: value })
   }
+  handleClearForm() {
+    this.setState({
+      bookTitle: '',
+      bookAuthor: ''
+    })
+  };
+
   handleSubmit(event) {
     event.preventDefault();
     let formPayload = {
@@ -31,7 +39,7 @@ class BookFormContainer extends Component {
   }}
   // debugger;
     this.props.addNewBook(formPayload);
-    // debugger;
+    this.handleClearForm();
   }
   handleDelete(event){
   let formPayload = {

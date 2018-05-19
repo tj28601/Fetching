@@ -23,8 +23,15 @@ class BookShowContainer extends Component {
   }
 
 
-  componentDidMount(){
-      fetch('/api/v1/books')
+
+    componentWillUpdate(){
+      fetch('/api/v1/books', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'same-origin'
+        })
         .then(response => {
           if (response.ok) {
             return response;
@@ -35,6 +42,10 @@ class BookShowContainer extends Component {
             }
         })
         .then(response => response.json())
+        // .then(json =>{
+        //   debugger;
+        // })
+
         .then(body => {
           let allBooks = body.books
             this.setState({ books: allBooks });
@@ -42,24 +53,24 @@ class BookShowContainer extends Component {
         .catch(error => console.error(`Error in fetch: ${error.message}`));
 
 }
-  componentDidMount(){
-fetch('/api/v1/favorites')
-  .then(response => {
-    if (response.ok) {
-      return response;
-    } else {
-        let errorMessage = `${response.status}(${response.statusText})`,
-          error = new Error(errorMessage);
-          throw(error);
-      }
-  })
-  .then(response => response.json())
-  .then(body => {
-    let allFavorites = body.favorites
-      this.setState({ favorites: allFavorites });
-  })
-  .catch(error => console.error(`Error in fetch: ${error.message}`));
-}
+//   componentWillMount(){
+// fetch('/api/v1/favorites')
+//   .then(response => {
+//     if (response.ok) {
+//       return response;
+//     } else {
+//         let errorMessage = `${response.status}(${response.statusText})`,
+//           error = new Error(errorMessage);
+//           throw(error);
+//       }
+//   })
+//   .then(response => response.json())
+//   .then(body => {
+//     let allFavorites = body.favorites
+//       this.setState({ favorites: allFavorites });
+//   })
+//   .catch(error => console.error(`Error in fetch: ${error.message}`));
+// }
 
       deleteBook(current_book){
         fetch('/api/v1/books/' + current_book, {
@@ -116,6 +127,12 @@ addToFavorites(book){
           this.setState({ books: newBookArray })
         })
   }
+// componentWillMount(){
+//   this.addNewBook()
+// }
+// componentDidMount(){
+//   this.addNewBook()
+// }
     // <SideBarComponent
     //   favorites={this.state.favoeites}
     //   <Menu isOpen />
@@ -123,6 +140,7 @@ addToFavorites(book){
     // />
 
   render(){
+    let handleAddNewBook = (formPayload) => this.addNewBook(formPayload)
 
     let sideBar = (
       <SideBarComponent
@@ -145,7 +163,7 @@ addToFavorites(book){
       />
 
       <BookFormContainer
-        addNewBook={this.addNewBook}
+        addNewBook={handleAddNewBook}
       />
     </div>
     )
