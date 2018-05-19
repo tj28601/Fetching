@@ -11,7 +11,7 @@ def new
   @favorite = Favorite.new
 end
   def create
-    # binding.pry
+    binding.pry
     @favorite = Favorite.new(favorite_params)
     if @favorite.save
       render json: Favorite.all
