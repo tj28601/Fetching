@@ -24,7 +24,7 @@ class BookShowContainer extends Component {
 
 
 
-    componentWillUpdate(){
+    componentDidMount(){
       fetch('/api/v1/books', {
           method: 'GET',
           headers: {
