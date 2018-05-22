@@ -1,6 +1,5 @@
 import React from 'react';
 
-// Router, browserHistory, Route, IndexRoute,
 const BookTile = props => {
 
   return (

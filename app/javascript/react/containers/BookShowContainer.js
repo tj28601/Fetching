@@ -42,10 +42,6 @@ class BookShowContainer extends Component {
             }
         })
         .then(response => response.json())
-        // .then(json =>{
-        //   debugger;
-        // })
-
         .then(body => {
           let allBooks = body.books
             this.setState({ books: allBooks });
