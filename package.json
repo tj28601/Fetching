@@ -8,6 +8,8 @@
     "react": "^16.2.0",
     "react-burger-menu": "^2.2.3",
     "react-dom": "^16.2.0",
+    "react-grid-gallery": "^0.4.11",
+    "react-image-gallery": "^0.8.7",
     "react-sidebar": "^2.3.2"
   },
   "devDependencies": {
