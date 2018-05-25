@@ -5,6 +5,10 @@ import BooksIndex from './BooksIndex';
 import BookFormContainer from './BookFormContainer';
 import SideBarComponent from './SideBarComponent';
 import { slide as Menu } from 'react-burger-menu';
+import Images from './Images';
+// import { render } from 'react-dom';
+// import PropTypes from 'prop-types';
+import Gallery from 'react-grid-gallery';
 
 class BookShowContainer extends Component {
   constructor(props) {
@@ -14,7 +18,9 @@ class BookShowContainer extends Component {
       favorites: [],
       bookAuthor: '',
       bookTitle: '',
-      books:[]
+      books:[],
+      cow:1,
+      images:[]
     };
     this.addNewBook = this.addNewBook.bind(this);
     this.deleteBook = this.deleteBook.bind(this);
@@ -23,33 +29,103 @@ class BookShowContainer extends Component {
   }
 
 
-
-    componentDidMount(){
-      fetch('/api/v1/books', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          credentials: 'same-origin'
-        })
-        .then(response => {
-          if (response.ok) {
-            return response;
-          } else {
-              let errorMessage = `${response.status}(${response.statusText})`,
-                error = new Error(errorMessage);
-                throw(error);
-            }
-        })
-        .then(response => response.json())
-        .then(body => {
-          let allBooks = body.books
-            this.setState({ books: allBooks });
-        })
-        .catch(error => console.error(`Error in fetch: ${error.message}`));
-
+//     componentWillUpdate(){
+//       fetch('/api/v1/books', {
+//           method: 'GET',
+//           headers: {
+//             'Content-Type': 'application/json'
+//           },
+//           credentials: 'same-origin'
+//         })
+//         .then(response => {
+//           if (response.ok) {
+//             return response;
+//           } else {
+//               let errorMessage = `${response.status}(${response.statusText})`,
+//                 error = new Error(errorMessage);
+//                 throw(error);
+//             }
+//         })
+//         .then(response => response.json())
+//         .then(body => {
+//           let allBooks = body.books
+//             this.setState({ books: allBooks });
+//         })
+//         .catch(error => console.error(`Error in fetch: ${error.message}`));
+// console.log('componentDidMount here.....')
+// return false;
+// }
+  componentDidMount(){
+fetch('/api/v1/books')
+  .then(response => {
+    if (response.ok) {
+      return response;
+    } else {
+        let errorMessage = `${response.status}(${response.statusText})`,
+          error = new Error(errorMessage);
+          throw(error);
+      }
+  })
+  .then(response => response.json())
+  .then(body => {
+    let allBooks = body.books
+      this.setState({ books: allBooks});
+  })
+  .catch(error => console.error(`Error in fetch: ${error.message}`));
+console.log(this.state)
 }
-//   componentWillMount(){
+
+// console.log(this.props)
+// if (this.state.cow = 1) {
+// return false;
+// console.log('returned false')
+// } else {
+
+// shouldComponentUpdate(nextProps, nextState){
+//   if (nextState.books.length - this.state.books.length !== 1) {
+// console.log('returned false')
+// // console.log(this.props)
+// // console.log(nextProps)
+// //if (this.state.books.length === nextState.books.length)
+// //  if (this.state.books.length !== 0) {
+// console.log(this.state.books.length)
+// console.log(nextState.books.length)
+// console.log((nextState.books.length)+(this.state.books.length))
+//   return false;
+//
+// }
+// //
+// console.log('returning true')
+//   fetch('/api/v1/books', {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       credentials: 'same-origin'
+//     })
+//     .then(response => {
+//       if (response.ok) {
+//         return response;
+//       } else {
+//           let errorMessage = `${response.status}(${response.statusText})`,
+//             error = new Error(errorMessage);
+//             throw(error);
+//         }
+//     })
+//     .then(response => response.json())
+//     .then(body => {
+//       let allBooks = body.books
+//         this.setState({ books: allBooks });
+//     })
+//     .catch(error => console.error(`Error in fetch: ${error.message}`));
+//
+// console.log("shouldComponentUpdate ........");
+// // return true;
+//
+//
+// }
+
+//   componentWillUpdate(){
 // fetch('/api/v1/favorites')
 //   .then(response => {
 //     if (response.ok) {
@@ -66,6 +142,8 @@ class BookShowContainer extends Component {
 //       this.setState({ favorites: allFavorites });
 //   })
 //   .catch(error => console.error(`Error in fetch: ${error.message}`));
+//   console.log("component updating.......");
+//   return true;
 // }
 
       deleteBook(current_book){
@@ -161,9 +239,14 @@ addToFavorites(book){
       <BookFormContainer
         addNewBook={handleAddNewBook}
       />
+<Images />
     </div>
     )
   }
 }
+
+
+
+
 
 export default BookShowContainer;
