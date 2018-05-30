@@ -2,9 +2,11 @@ import React from 'react';
 import BookTile from './BookTile'
 
 const BooksIndex = props => {
-
+// debugger;
   let booksArray = props.books.map(book => {
         let id = book.id
+        let book_id = book.id
+        // let user_id = 2
         let author = book.author
         let title = book.title
         let handleDelete = () => props.deleteBook(id)
