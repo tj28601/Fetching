@@ -72,7 +72,34 @@ fetch('/api/v1/books')
       this.setState({ books: allBooks});
   })
   .catch(error => console.error(`Error in fetch: ${error.message}`));
-console.log(this.state)
+
+
+fetch('/api/v1/favorites', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+      })
+    .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+          let errorMessage = `${response.status}(${response.statusText})`,
+            error = new Error(errorMessage);
+            throw(error);
+        }
+    })
+    .then(response => response.json())
+    // .then(json => {
+    //   debugger;
+    // })
+    .then(body => {
+      let allFavorites = body.favorites
+        this.setState({ favorites: allFavorites });
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
+    // console.log(this.state.favorites)
 }
 
 // console.log(this.props)
@@ -183,7 +210,7 @@ addToFavorites(book){
         'X-Requested-With': 'XMLHttpRequest'
        }
 
-      }).then((response) => response.json())
+     }).then((response) => response.json())
       const newFavs = this.state.favorites.filter(favorite => favorite.id !== current_favorite)
         this.setState({favorites: newFavs})
 
@@ -234,6 +261,7 @@ addToFavorites(book){
         deleteBook={this.deleteBook}
         addToFavorites={this.addToFavorites}
         deleteFavorite={this.deleteFromFavorites}
+
       />
 
       <BookFormContainer

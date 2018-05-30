@@ -1,6 +1,6 @@
-class Favorite < ApplicationRecord
+class Book < ApplicationRecord
   validates_uniqueness_of :title, presence: true
   validates :author, presence: true
-
-    # foreign_key: "book_id"
+  has_many :users
+  has_many :favorites, through: :users
 end

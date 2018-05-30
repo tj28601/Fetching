@@ -5,12 +5,14 @@ import { slide as Menu } from 'react-burger-menu';
 
 
 const SideBarComponent = props => {
-  // debugger;
+
+  // console.log(props.favorites)
+  //   debugger;
 
     let favoritesArray = props.favorites.map(favorite => {
           let id = favorite.id
-          let author = favorite.author
-          let title = favorite.title
+          let author = favorite.book.author
+          let title = favorite.book.title
           let deleteFromFavorites = () => props.deleteFromFavorites(id)
 
       return(
